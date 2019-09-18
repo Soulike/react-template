@@ -1,10 +1,19 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import './index.scss';
+import {Provider} from 'react-redux';
+import Store from './Store';
+import Loading from './Component/Loading';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const Router = React.lazy(() => import('./Router'));
+
+ReactDOM.render(
+    <Suspense fallback={<Loading />}>
+        <Provider store={Store}>
+            <Router />
+        </Provider>
+    </Suspense>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
